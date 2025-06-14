@@ -10,7 +10,7 @@ export default function ListPage() {
         try {
             const userService = new UserService(window.location.origin);
             const userList = await userService.GetAll();
-            setUsers(userList); // Adjust if backend returns { users: [...] }
+            setUsers(userList); 
         } catch (error) {
             console.error("Failed to load users:", error);
         }
@@ -26,8 +26,11 @@ export default function ListPage() {
                 backgroundColor: '#fff',
                 padding: '24px',
                 height: '100vh',
+                width: '80%',
                 display: 'flex',
-                flexDirection: 'column'
+                flexDirection: 'column',
+                justifyContent: 'center',
+                justifySelf: 'center'
             }}
         >
             <div style={{ color: '#333', fontSize: '44px', fontWeight: 'bold' }}>User List</div>
@@ -58,9 +61,14 @@ export default function ListPage() {
                     >
                         <p><strong>{user.firstname} {user.lastname}</strong></p>
                         <p>{user.email}</p>
-                        <p>{user.id}</p>
+                        <p>ID:{user.id}</p>
                     </div>
                 ))}
+            </div>
+            <div style={{ marginTop: '16px', display: 'flex', justifyContent: 'flex-start' }}>
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Settings
+                </button>
             </div>
         </div>
     );
