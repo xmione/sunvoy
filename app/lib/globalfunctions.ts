@@ -26,6 +26,6 @@ export const isMatched = async (plain:string, hash:string): Promise<boolean> =>{
 
 export const saveAsJsonFile = async (filePath: string, data: any): Promise<void> =>{
 
-    const jsonData = JSON.stringify(data);
+    const jsonData = JSON.stringify(data, null, 2);
     await fs.writeFile(filePath, jsonData, 'utf8');
 }
