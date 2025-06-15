@@ -41,6 +41,6 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 [Process Flow - Next.js Authentication.md](Docs/Process%20%Flow%20%-%20%Next.js%20%Authentication.md) document.
 
-[Steps - How to Expose Your Local Web App to the Web.md](Docs/Steps%20-%20How%20to%20Expose%20Your%20Local%20Web%20App%20to%20the%20Web.md)
+[Steps - How to Expose Your Local Web App to the Web.md](Docs/Steps%20-%20How%20to%20Expose%20Your%20Local%20Web%20App%20to%20the%20Web.md) document.
 
 [Video Link](https://www.loom.com/share/b437458930484b3f8977c58450065a5e?sid=ad5203c4-7d2d-40b1-9f3f-8315e260386c)
