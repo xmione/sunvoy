@@ -42,7 +42,7 @@
 
 ## Other documentations:
 
-[Steps - Development Environment Setup.md](Docs/Steps%20%-%20%Development%20%Environment%20%Setup.md) document.
+[Steps - Development Environment Setup.md](Docs/Steps%20-%20Development%20Environment%20Setup.md) document.
 
 [Process Flow - Next.js Authentication.md](Docs/Process%20Flow%20-%20Next.js%20Authentication.md) document.
 
