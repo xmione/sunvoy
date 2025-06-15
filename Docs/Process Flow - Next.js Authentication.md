@@ -31,8 +31,8 @@ This document outlines the end-to-end process of how a user is created, authenti
 
 ```mermaid
 flowchart TD
-    A[Create users running createUsers.ts script]
-    A --> B[Insert User Record into users.json file]
+    A[Create users by running createUsers.ts script]
+    A --> B[Insert users records into users.json file]
     B --> C[NextAuth Authenticates User on Login]
     C --> D[JWT & Session Creation ]
     D --> E[Middleware Checks session, redirect to the List Page]
