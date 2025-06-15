@@ -9,6 +9,8 @@
     - Use a separate middleware.ts to manage the routing and authentication.
     - Use a nav_link.tsx and sideNave.tsx files to handle the side panel menus for many menu and submenu items.
     - Use a dbService.ts and dbClient.ts for handling database services and database connections and transactions.
+    - Remove the scroll bars and make page browse normally.
+    - Use a footer or header div that floats that will contain the buttons. 
     - Use ML as an App Assistant.
 
 ## Build and Run
