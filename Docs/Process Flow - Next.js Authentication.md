@@ -34,9 +34,9 @@ flowchart TD
     A[Create users running createUsers.ts script]
     A --> B[Insert User Record into users.json file]
     B --> C[NextAuth Authenticates User on Login]
-    D --> E[JWT & Session Creation ]
-    F --> G[Middleware Checks session, redirect to the List Page]
-    H --> I[UI Renders the List Page]
+    C --> D[JWT & Session Creation ]
+    D --> E[Middleware Checks session, redirect to the List Page]
+    E --> F[UI Renders the List Page]
 
 ```
 ## Detailed Process Sequence Diagram
