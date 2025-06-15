@@ -45,7 +45,6 @@ sequenceDiagram
     %% Participants
     participant U as User
     participant C as Client (Browser)
-    participant M as Middleware (/middleware.ts)
     participant LP as Landing (/app/page.tsx)
     participant NA as NextAuth (/api/auth/[...nextauth]/route.ts)
     participant API as API (UserService)
@@ -53,8 +52,8 @@ sequenceDiagram
     participant LST as ListPage (/list)
 
     %% 1. Users Creation
-    U->>C: Manually creates the users.json file
-    C->>API: Call create user API
+    U->>DB: Manually creates users.json file
+    C->>API: Request to create user
     API->>DB: Store user record in users.json
     
     %% 2. Login Process
@@ -67,18 +66,14 @@ sequenceDiagram
     NA->>C: Issue JWT & session token
 
     %% 3. Landing & Auto Sign‑In
-    C->>M: Requests landing page
-    M->>NA: Check session status
-    NA-->>M: User is authenticated
-    M->>C: Allow access to protected routes
+    C->>NA: Check session status
+    NA-->>C: User is authenticated
     C->>LP: Render landing page
 
-    %% 4. Navigate to Dashboard
+    %% 4. Navigate to List Page
     U->>C: Clicks "Go to List Page"
-    C->>M: Middleware validates session
-    M->>NA: Check session
-    NA-->>M: Session valid
-    M->>C: Allow access to /list
+    C->>NA: Validate session via NextAuth
+    NA-->>C: Session valid
     C->>LST: Render list page
 
 ```
