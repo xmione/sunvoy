@@ -24,8 +24,7 @@ export const isMatched = async (plain:string, hash:string): Promise<boolean> =>{
     return isMatched;
 };
 
-export const saveAsJsonFile = async (filePath: string, data: any): Promise<void> =>{
-
-    const jsonData = JSON.stringify(data, null, 2);
-    await fs.writeFile(filePath, jsonData, 'utf8');
+export const saveAsJsonFile = async <T>(filePath: string, data: T): Promise<void> => {
+  const jsonData = JSON.stringify(data, null, 2);
+  await fs.writeFile(filePath, jsonData, "utf8");
 }

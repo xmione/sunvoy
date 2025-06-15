@@ -1,26 +1,28 @@
 'use client';
 import { useState } from 'react';
+import { useSession, signIn, signOut } from "next-auth/react";
 
 export default function LoginPage() {
+  const { data: session } = useSession();
   const [email, setEmail] = useState('demo@example.org');
   const [password, setPassword] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Logging in with:', email, password);
-    try {
-      const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await response.json();
-      console.log('Login response:', data);
-    } catch (error) {
-      console.error('Login error:', error);
-    }
+    console.log("Logging in with:", email, password);
+
+    await signIn("credentials", {
+      email,
+      password,
+      redirect: true, 
+      callbackUrl: "/list"
+    }).then((res) => {
+      if (res?.error) {
+        console.error("Login failed:", res.error);
+      } else {
+        console.log("Login successful!");
+      }
+    });
   };
 
   return (
@@ -43,11 +45,11 @@ export default function LoginPage() {
         width: '500px'
       }}>
         <center>
-            <label style={{ fontWeight: 'bold', fontSize: '36px', justifyContent:'center', justifySelf: 'center', width:'100%' }}>
-                Login
-            </label>
+          <label style={{ fontWeight: 'bold', fontSize: '36px' }}>
+            Login
+          </label>
         </center>
-        <label>Username</label>
+        <label>Email</label>
         <input
           type="email"
           placeholder="Email"
@@ -76,6 +78,23 @@ export default function LoginPage() {
           Sign In
         </button>
       </form>
+
+      {session ? (
+        <div style={{ marginTop: '20px' }}>
+          <p>Welcome, {session.user?.email}</p>
+          <button onClick={() => signOut()} style={{
+            marginTop: '10px',
+            padding: '8px',
+            backgroundColor: 'red',
+            color: 'white',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer'
+          }}>
+            Sign Out
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 }

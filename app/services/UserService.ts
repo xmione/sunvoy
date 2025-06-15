@@ -42,5 +42,21 @@ export default class UserService {
         }
     };
 
+    async GetUserByEmail(email: string): Promise<User> {
+        const url = `${this.baseUrl}?email=${email}`;
+
+        try {
+            const response = await fetch(url, { method: 'GET' });
+            if (!response.ok) {
+                throw new Error(`Error fetching data: ${response.statusText}`);
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.log(`Error in fetchData: ${url}\r\n`, error);
+            throw error;
+        }
+    };
+
 };
  
