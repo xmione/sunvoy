@@ -45,37 +45,42 @@ sequenceDiagram
     %% Participants
     participant U as User
     participant C as Client (Browser)
-    participant LP as Landing (/app/page.tsx)
-    participant NA as NextAuth (/api/auth/[...nextauth]/route.ts)
+    participant CU as createUsers.ts (Script)
     participant API as API (UserService)
     participant DB as Database (users.json)
+    participant LP as Landing (/app/page.tsx)
+    participant NA as NextAuth (/api/auth/[...nextauth]/route.ts)
     participant LST as ListPage (/list)
 
-    %% 1. Users Creation
-    U->>DB: Manually creates users.json file
-    C->>API: Request to create user
-    API->>DB: Store user record in users.json
+    %% 1. Users Creation via Script
+    U->>CU: Runs `npx tsx app/utils/createUsers.ts`
+    CU->>DB: Generates and saves users to `users.json`
     
-    %% 2. Login Process
+    %% 2. Manual API-Based User Creation
+    U->>C: Requests new user creation manually
+    C->>API: Call create user API
+    API->>DB: Store user record in `users.json`
+    
+    %% 3. Login Process
     U->>C: Enters email & password in login form
     C->>NA: Sends credentials to NextAuth
     NA->>API: Fetch user by email
-    API->>DB: Retrieve user details from users.json
+    API->>DB: Retrieve user details from `users.json`
     API->>NA: Return user details
     NA->>C: Validate password with bcrypt
     NA->>C: Issue JWT & session token
 
-    %% 3. Landing & Auto Sign‑In
+    %% 4. Landing & Auto Sign‑In
     C->>NA: Check session status
     NA-->>C: User is authenticated
     C->>LP: Render landing page
 
-    %% 4. Navigate to List Page
+    %% 5. Navigate to List Page
     U->>C: Clicks "Go to List Page"
     C->>NA: Validate session via NextAuth
     NA-->>C: Session valid
     C->>LST: Render list page
-
+    
 ```
 ---
 ## Conclusion
