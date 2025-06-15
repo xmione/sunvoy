@@ -1,9 +1,9 @@
 # Sunvoy Web Application
-    - This web application is developed as a solution to https://challenge.sunvoy.com/ challenge.
-    - It implements the following:
-        -- NextAuth.js for authentication 
-        -- session and router for navigation and user validation.
-        -- users.json file, /app/api/auth/[...nextauth].router.ts for api functions like fetching data.
+- This web application is developed as a solution to https://challenge.sunvoy.com/ challenge.
+- It implements the following:
+    - NextAuth.js for authentication 
+    - session and router for navigation and user validation.
+    - users.json file, /app/api/auth/[...nextauth].router.ts for api functions like fetching data.
 
 ## Build and Run
 
