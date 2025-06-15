@@ -1,24 +1,38 @@
 'use client';
 import React, { useCallback, useEffect, useState } from 'react';
+import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import UserService from '../services/UserService';
 import { User } from '../lib/definitions';
 
 export default function ListPage() {
+    const { data: session, status } = useSession();
+    const router = useRouter();
     const [users, setUsers] = useState<User[]>([]);
+
+    useEffect(() => {
+        if (status === "unauthenticated") {
+            router.push("/"); 
+        }
+    }, [status, router]);
 
     const loadAllData = useCallback(async () => {
         try {
+            if (!session) return;
             const userService = new UserService(window.location.origin);
             const userList = await userService.GetAll();
             setUsers(userList); 
         } catch (error) {
             console.error("Failed to load users:", error);
         }
-    }, []);
+    }, [session]);
 
     useEffect(() => {
         loadAllData();
     }, [loadAllData]);
+
+    if (status === "loading") return <p>Loading...</p>;
+    if (!session) return null; 
 
     return (
         <div
@@ -68,6 +82,11 @@ export default function ListPage() {
             <div style={{ marginTop: '16px', display: 'flex', justifyContent: 'flex-start' }}>
                 <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     Settings
+                </button>
+                <button 
+                    onClick={() => signOut()} 
+                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                    Sign Out
                 </button>
             </div>
         </div>
