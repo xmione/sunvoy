@@ -57,7 +57,7 @@ export default function SettingsPage() {
             border: '2px solid #ccc',
             borderRadius: '12px',
             boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-            margin: 'auto', // ✅ Centers the box flexibly
+            margin: 'auto',  
             position: 'absolute',
             top: '50%',
             left: '50%',
@@ -68,8 +68,8 @@ export default function SettingsPage() {
                 fontSize: '30px',
                 fontWeight: 'bold',
                 marginBottom: '20px',
-                textAlign: 'center' // ✅ Ensures title remains centered
-            }}>User Information</h1> {/* ✅ Added User Information label */}
+                textAlign: 'center' 
+            }}>User Information</h1>  
 
             {user ? (
                 <div style={{
