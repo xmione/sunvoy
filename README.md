@@ -4,6 +4,12 @@
     - NextAuth.js for authentication 
     - router and session for navigation and user validation.
     - users.json file, /app/api/auth/[...nextauth].router.ts for api functions like fetching data.
+- It initially implemented the Page router but eventually switched to App router for a more flexible and modern solution.
+- Next improvements:
+    - Use a separate middleware.ts to manage the routing and authentication.
+    - Use a nav_link.tsx and sideNave.tsx files to handle the side panel menus for many menu and submenu items.
+    - Use a dbService.ts and dbClient.ts for handling database services and database connections and transactions.
+    - Use ML as an App Assistant.
 
 ## Build and Run
 
