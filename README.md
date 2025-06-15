@@ -38,3 +38,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 ## Other documentations:
 
 [Steps - Development Environment Setup.md](Docs/Steps%20%-%20%Development%20%Environment%20%Setup.md) document.
+
+[Process Flow - Next.js Authentication.md](Docs/Process%20%Flow%20%-%20%Next.js Authentication.md) document.
