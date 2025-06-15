@@ -4,24 +4,24 @@ import { signOut, useSession } from "next-auth/react";
 import UserService from '../services/UserService';
 import { User } from '../lib/definitions';
 
-export default function ListPage() {
+export default function SettingsPage() {
     const { data: session, status } = useSession();
-    const [users, setUsers] = useState<User[]>([]);
+    const [user, setUser] = useState<User>();
 
-    const loadAllData = useCallback(async () => {
+    const loadUserData = useCallback(async () => {
         try {
             if (!session) return; 
             const userService = new UserService(window.location.origin);
-            const userList = await userService.GetAll();
-            setUsers(userList); 
+            const user = await userService.GetUserByEmail(session.user?.email ?? "");
+            setUser(user); 
         } catch (error) {
             console.error("Failed to load users:", error);
         }
     }, [session]);
 
     useEffect(() => {
-        loadAllData();
-    }, [loadAllData]);
+        loadUserData();
+    }, [loadUserData]);
 
     if (status === "loading") return <p>Loading...</p>;
 
@@ -52,7 +52,7 @@ export default function ListPage() {
                 justifySelf: 'center'
             }}
         >
-            <div style={{ color: '#333', fontSize: '44px', fontWeight: 'bold' }}>User List</div>
+            <div style={{ color: '#333', fontSize: '44px', fontWeight: 'bold' }}>Settings</div>
             <div
                 style={{
                     marginTop: '16px',
@@ -64,9 +64,8 @@ export default function ListPage() {
                     paddingRight: '8px'
                 }}
             >
-                {users.map(user => (
+                {user && (
                     <div
-                        key={user.id}
                         style={{
                             color: '#333',
                             fontSize: '24px',
@@ -82,11 +81,14 @@ export default function ListPage() {
                         <p>{user.email}</p>
                         <p>ID:{user.id}</p>
                     </div>
-                ))}
+                )}
+                 
             </div>
             <div style={{ marginTop: '16px', display: 'flex', justifyContent: 'flex-start' }}>
-                <button onClick={() => window.location.href = "/settings"} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Settings
+                <button 
+                    onClick={() => window.location.href = "/list"} 
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Back to List
                 </button>
                 <button 
                     onClick={() => signOut()} 
