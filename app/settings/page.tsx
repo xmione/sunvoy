@@ -10,12 +10,12 @@ export default function SettingsPage() {
 
     const loadUserData = useCallback(async () => {
         try {
-            if (!session) return; 
+            if (!session) return;
             const userService = new UserService(window.location.origin);
             const user = await userService.GetUserByEmail(session.user?.email ?? "");
-            setUser(user); 
+            setUser(user);
         } catch (error) {
-            console.error("Failed to load users:", error);
+            console.error("Failed to load user:", error);
         }
     }, [session]);
 
@@ -27,9 +27,14 @@ export default function SettingsPage() {
 
     if (status === "unauthenticated") {
         return (
-            <div style={{ textAlign: "center", marginTop: "50px", fontSize: "24px", color: "red" }}>
+            <div style={{
+                textAlign: "center",
+                marginTop: "50px",
+                fontSize: "24px",
+                color: "red",
+                padding: "20px"
+            }}>
                 <p><strong>Unauthorized</strong></p>
-                
                 <button 
                     onClick={() => window.location.href = "/"} 
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
@@ -40,54 +45,59 @@ export default function SettingsPage() {
     }
 
     return (
-        <div
-            style={{
-                backgroundColor: '#fff',
-                padding: '24px',
-                height: '100vh',
-                width: '80%',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                justifySelf: 'center'
-            }}
-        >
-            <div style={{ color: '#333', fontSize: '44px', fontWeight: 'bold' }}>Settings</div>
-            <div
-                style={{
-                    marginTop: '16px',
-                    overflowY: 'auto',
-                    flex: 1,
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(3, 1fr)',
-                    gap: '16px',
-                    paddingRight: '8px'
-                }}
-            >
-                {user && (
-                    <div
-                        style={{
-                            color: '#333',
-                            fontSize: '24px',
-                            border: '1px solid #ccc',
-                            borderRadius: '8px',
-                            padding: '12px',
-                            backgroundColor: '#f9f9f9',
-                            boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-                            wordBreak: 'break-word'
-                        }}
-                    >
-                        <p><strong>{user.firstname} {user.lastname}</strong></p>
-                        <p>{user.email}</p>
-                        <p>ID:{user.id}</p>
-                    </div>
-                )}
-                 
-            </div>
-            <div style={{ marginTop: '16px', display: 'flex', justifyContent: 'flex-start' }}>
+        <div style={{
+            backgroundColor: '#fff',
+            padding: '32px',
+            width: '90%', 
+            maxWidth: '1000px', 
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            border: '2px solid #ccc',
+            borderRadius: '12px',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+            margin: 'auto', // ✅ Centers the box flexibly
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)'
+        }}>
+            <h1 style={{
+                color: '#333',
+                fontSize: '30px',
+                fontWeight: 'bold',
+                marginBottom: '20px',
+                textAlign: 'center' // ✅ Ensures title remains centered
+            }}>User Information</h1> {/* ✅ Added User Information label */}
+
+            {user ? (
+                <div style={{
+                    width: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '12px'
+                }}>
+                    <label style={{ fontWeight: "bold" }}>User ID</label>
+                    <input type="text" value={user.id} readOnly style={inputStyle} />
+
+                    <label style={{ fontWeight: "bold" }}>First Name</label>
+                    <input type="text" value={user.firstname} readOnly style={inputStyle} />
+
+                    <label style={{ fontWeight: "bold" }}>Last Name</label>
+                    <input type="text" value={user.lastname} readOnly style={inputStyle} />
+
+                    <label style={{ fontWeight: "bold" }}>Email</label>
+                    <input type="text" value={user.email} readOnly style={inputStyle} />
+                </div>
+            ) : (
+                <p style={{ color: "#777", fontSize: "20px" }}>User data not found.</p>
+            )}
+
+            <div style={{ marginTop: '24px', display: 'flex', justifyContent: 'center' }}>
                 <button 
                     onClick={() => window.location.href = "/list"} 
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded">
                     Back to List
                 </button>
                 <button 
@@ -99,3 +109,13 @@ export default function SettingsPage() {
         </div>
     );
 }
+
+const inputStyle = {
+    width: "100%",
+    padding: "8px",
+    border: "1px solid #ccc",
+    borderRadius: "6px",
+    backgroundColor: "#f5f5f5",
+    fontSize: "16px",
+    cursor: "not-allowed"
+};
