@@ -1,24 +1,16 @@
 'use client';
 import React, { useCallback, useEffect, useState } from 'react';
 import { signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import UserService from '../services/UserService';
 import { User } from '../lib/definitions';
 
 export default function ListPage() {
     const { data: session, status } = useSession();
-    const router = useRouter();
     const [users, setUsers] = useState<User[]>([]);
-
-    useEffect(() => {
-        if (status === "unauthenticated") {
-            router.push("/"); 
-        }
-    }, [status, router]);
 
     const loadAllData = useCallback(async () => {
         try {
-            if (!session) return;
+            if (!session) return; 
             const userService = new UserService(window.location.origin);
             const userList = await userService.GetAll();
             setUsers(userList); 
@@ -32,7 +24,20 @@ export default function ListPage() {
     }, [loadAllData]);
 
     if (status === "loading") return <p>Loading...</p>;
-    if (!session) return null; 
+
+    if (status === "unauthenticated") {
+        return (
+            <div style={{ textAlign: "center", marginTop: "50px", fontSize: "24px", color: "red" }}>
+                <p><strong>Unauthorized</strong></p>
+                
+                <button 
+                    onClick={() => window.location.href = "/"} 
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Go to Login
+                </button>
+            </div>
+        );
+    }
 
     return (
         <div
